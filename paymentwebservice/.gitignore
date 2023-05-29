@@ -33,4 +33,4 @@ build/
 .vscode/
 
 ## public private keys
-paymentwebservice/src/main/resources/certs/
+/paymentwebservice/src/main/resources/certs/
