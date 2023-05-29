@@ -1,0 +1,33 @@
+server:
+  port: 8081
+  error:
+    include-binding-errors: always
+    include-message: always
+
+topic:
+  name: t.payments
+
+spring:
+  datasource:
+    url : jdbc:sqlserver://localhost:49172;encrypt=true;trustServerCertificate=true;databaseName=db_payment
+    username : test
+    password: test123
+    hikari:
+      connection-timeout: 20000
+      minimum-idle: 10
+      maximum-pool-size: 10
+      auto-commit: true
+      idle-timeout: 10000
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.SQLServerDialect
+    hibernate:
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      ddl-auto: validate
+
+rsa:
+  private-key: classpath:certs/private.pem
+  public-key: classpath:certs/public.pem

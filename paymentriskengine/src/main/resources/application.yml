@@ -1,0 +1,23 @@
+server:
+  port: 8080
+
+topic:
+  name: t.payments
+
+spring:
+  kafka:
+    consumer:
+      group-id: "default"
+  datasource:
+    url : jdbc:sqlserver://localhost:49172;encrypt=true;trustServerCertificate=true;databaseName=db_payment
+    username : test
+    password: test123
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.SQLServerDialect
+    hibernate:
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      ddl-auto: validate
