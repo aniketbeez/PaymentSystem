@@ -9,10 +9,10 @@ Setup:
 * Configure spring datasource accordingly in application.yml file. Generally the credentials are stored in an encrypted store like secrets manager in aws. But for this POC, we are hard coding them with the data source in application.yml file
 
 ### 2. Kakfa  
-A distributed queue where the payment rest api publishes create payment messages to be consumed by payment risk engine
+A distributed queue where the payment rest api publishes create payment messages to be consumed by payment risk engine. For this POC, already created kafka image is used [Image](https://hub.docker.com/r/obsidiandynamics/kafka)
 * Kafka - kafka broker
-* Zookeeper - For leader election
-* KafDrop - A web UI for viewing Kafka topics and browsing consumer groups   
+* Zookeeper - For leader election, health-check etc.
+* KafDrop - A web UI for viewing Kafka topics and browsing consumer groups
 
 Setup :  
 * Configure the topic name in the application.yml file
@@ -36,6 +36,12 @@ Prerequisites:
 
 ### 4. Payment Risk Engine
 Consumes messages from the Kakfa queue, performs risk analysis and stores the messages in the Sql Server database. As this is a POC risk engine, it has a dummy logic for performing risk analysis and accepting only 70% of the messages.
+
+
+## Assumptions/Considerations
+* All other APIs such register user, register payment method, etc. are out-of-scope
+* Encryption of secret information is not implemented but can be discussed during the interview
+* Risk analysis requirements are out of scope and is replaced with a dummy logic of risk calculations
 
 ## Running the Project:
 
