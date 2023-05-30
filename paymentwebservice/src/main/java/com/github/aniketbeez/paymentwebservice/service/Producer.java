@@ -4,6 +4,7 @@ package com.github.aniketbeez.paymentwebservice.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.aniketbeez.paymentwebservice.domain.Payment;
+import com.github.aniketbeez.paymentwebservice.service.Interfaces.ProducerInf;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,7 +12,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 @Slf4j
 @Component
-public class Producer {
+public class Producer implements ProducerInf {
 
     @Value("${topic.name}")
     private String paymentTopic;

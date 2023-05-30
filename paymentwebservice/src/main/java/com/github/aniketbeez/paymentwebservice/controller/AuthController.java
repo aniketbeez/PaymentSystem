@@ -1,28 +1,29 @@
 package com.github.aniketbeez.paymentwebservice.controller;
 
+import com.github.aniketbeez.paymentwebservice.service.Interfaces.AuthenticatorInf;
 import com.github.aniketbeez.paymentwebservice.service.TokenService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @RestController
 public class AuthController {
 
-    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
+    private final AuthenticatorInf tokenService;
 
-    private final TokenService tokenService;
-
+    @Autowired
     public AuthController(TokenService tokenService) {
         this.tokenService = tokenService;
     }
 
     @PostMapping("/token")
     public String token(Authentication authentication) {
-        logger.info("Token requested for user: '{}'", authentication.getName());
+        log.info("Token requested for user: '{}'", authentication.getName());
         String token = tokenService.generateToken(authentication);
-        logger.info("Token granted: {}", token);
+        log.info("Token granted: {}", token);
         return token;
     }
 

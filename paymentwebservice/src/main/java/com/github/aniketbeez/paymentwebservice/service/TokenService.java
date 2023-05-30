@@ -1,5 +1,6 @@
 package com.github.aniketbeez.paymentwebservice.service;
 
+import com.github.aniketbeez.paymentwebservice.service.Interfaces.AuthenticatorInf;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
@@ -12,7 +13,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.stream.Collectors;
 
 @Service
-public class TokenService {
+public class TokenService implements AuthenticatorInf {
 
     private final JwtEncoder encoder;
 

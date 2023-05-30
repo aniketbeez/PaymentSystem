@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.aniketbeez.paymentriskengine.model.Payment;
 import com.github.aniketbeez.paymentriskengine.domain.PaymentDto;
 import com.github.aniketbeez.paymentriskengine.service.PaymentService;
+import com.github.aniketbeez.paymentriskengine.service.interfaces.ConsumerInf;
 import com.github.aniketbeez.paymentriskengine.service.interfaces.RiskCalculatorInf;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -15,13 +16,13 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class Consumer {
+public class Consumer implements ConsumerInf {
     private static final String paymentTopic = "t.payments";
 
     private final ObjectMapper objectMapper;
     private final ModelMapper modelMapper;
     private final PaymentService paymentService;
-    private final PocRiskCalculator pocRiskCalculator;
+    private final RiskCalculatorInf pocRiskCalculator;
     private final PaymentCounter paymentCounter;
 
     @Autowired

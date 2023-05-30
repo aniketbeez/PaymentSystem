@@ -7,6 +7,7 @@ import com.github.aniketbeez.paymentwebservice.model.PaymentUser;
 import com.github.aniketbeez.paymentwebservice.repository.PayeeRepository;
 import com.github.aniketbeez.paymentwebservice.repository.PaymentMethodRepository;
 import com.github.aniketbeez.paymentwebservice.repository.PaymentUserRepository;
+import com.github.aniketbeez.paymentwebservice.service.Interfaces.ProducerInf;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ import java.util.UUID;
 @Slf4j
 @Service
 public class PaymentService {
-    private final Producer producer;
+    private final ProducerInf producer;
     private final PaymentUserRepository paymentUserRepository;
 
     private final PaymentMethodRepository paymentMethodRepository;

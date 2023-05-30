@@ -6,12 +6,17 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Column;
-import org.hibernate.annotations.Type;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "PaymentUser", schema = "dbo")
 public class PaymentUser {
 
@@ -24,38 +29,6 @@ public class PaymentUser {
     private String lastName;
     @Column(name = "emailId")
     private String emailId;
-
-    public PaymentUser() {
-
-    }
-
-    public PaymentUser(String firstName, String lastName, String emailId) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.emailId = emailId;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-    public String getFirstName() {
-        return firstName;
-    }
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-    public String getLastName() {
-        return lastName;
-    }
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-    public String getEmailId() {
-        return emailId;
-    }
-    public void setEmailId(String emailId) {
-        this.emailId = emailId;
-    }
 
     @Override
     public String toString() {
