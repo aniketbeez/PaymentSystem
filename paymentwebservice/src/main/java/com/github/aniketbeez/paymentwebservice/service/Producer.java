@@ -32,6 +32,6 @@ public class Producer {
 
         log.info("payment message produced {}", paymentMessage);
 
-        return "message sent";
+        return "Payment created!";
     }
 }

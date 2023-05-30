@@ -1,0 +1,45 @@
+GO
+BEGIN
+CREATE TABLE PaymentUser (
+    id uniqueidentifier default newid() PRIMARY KEY,
+    lastName nvarchar(255) NOT NULL,
+    firstName nvarchar(255) NOT NULL,
+    emailId  nvarchar(255) NOT NULL
+);
+CREATE UNIQUE INDEX ind_emailId ON PaymentUser(emailId);
+
+CREATE TABLE PaymentMethodType (
+    type nvarchar(100) PRIMARY KEY,
+	description nvarchar(255)
+);
+
+CREATE TABLE PaymentMethod(
+	id uniqueidentifier default newid() PRIMARY KEY,
+    userId uniqueidentifier NOT NULL FOREIGN KEY REFERENCES dbo.PaymentUser(id),
+	paymentType nvarchar(100) NOT NULL FOREIGN KEY REFERENCES dbo.PaymentMethodType(type),
+	paymentMethodName nvarchar(100) NOT NULL,
+	lastFourDigits  nvarchar(4) NOT NULL
+);
+CREATE INDEX ind_PaymentMethodSearch ON PaymentMethod(userId);
+
+
+CREATE TABLE Payment(
+	id uniqueidentifier default newid() PRIMARY KEY,
+    	userId uniqueidentifier NOT NULL FOREIGN KEY REFERENCES dbo.PaymentUser(id),
+	payeeId uniqueidentifier NOT NULL FOREIGN KEY REFERENCES dbo.PaymentUser(id),
+	paymentMethodId uniqueidentifier NOT NULL FOREIGN KEY REFERENCES dbo.PaymentMethod(id),
+	currency varchar(3) NOT NULL,
+	amount decimal(19,4) NOT NULL,
+	approved bit NOT NULL,
+	riskScore tinyint NOT NULL
+);
+
+CREATE TABLE Payee(
+    userId uniqueidentifier NOT NULL FOREIGN KEY REFERENCES dbo.PaymentUser(id),
+	payeeId uniqueidentifier NOT NULL FOREIGN KEY REFERENCES dbo.PaymentUser(id),
+	CONSTRAINT PK_User_payee PRIMARY KEY (userId,payeeId)
+);
+
+
+
+END

@@ -31,3 +31,7 @@ spring:
 rsa:
   private-key: classpath:certs/private.pem
   public-key: classpath:certs/public.pem
+
+logging:
+  level:
+    root: info

@@ -52,8 +52,8 @@ public class PaymentController {
 
     @PostMapping("/create-payment")
     public ResponseEntity<PaymentResponse> createPayment(@Valid @RequestBody Payment payment) {
+        log.info("Payment creation request received : " + payment.toString());
         if(bucket.tryConsume(1)) {
-            log.info("Payment creation request received");
             try{
                 //validate if payment request has all the required fields
                 if(!paymentValidator.isValidPaymentRequest(payment)){
@@ -86,20 +86,25 @@ public class PaymentController {
 
     @GetMapping("/get-payment-methods")
     public ResponseEntity<PaymentMethodResponse> getPaymentMethodsForUser(@RequestParam String userId) {
-        try {
-            validateUser(userId);
-            List<PaymentMethod> paymentMethods = new ArrayList<>();
-            paymentService.findPaymentMethodsForUser(UUID.fromString(userId), paymentMethods);
-            return new ResponseEntity<>(new PaymentMethodResponse(paymentMethods, null), HttpStatus.OK);
-        } catch (InvalidPaymentException ipe) {
-            return new ResponseEntity<>(new PaymentMethodResponse(null, ipe.getMessage()), HttpStatus.BAD_REQUEST);
-        } catch (Exception e) {
-            return new ResponseEntity<>(new PaymentMethodResponse(null, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        log.info("Get payment method request received for userId : " + userId);
+        if(bucket.tryConsume(1)) {
+            try {
+                validateUser(userId);
+                List<PaymentMethod> paymentMethods = new ArrayList<>();
+                paymentService.findPaymentMethodsForUser(UUID.fromString(userId), paymentMethods);
+                return new ResponseEntity<>(new PaymentMethodResponse(paymentMethods, null), HttpStatus.OK);
+            } catch (InvalidPaymentException ipe) {
+                return new ResponseEntity<>(new PaymentMethodResponse(null, ipe.getMessage()), HttpStatus.BAD_REQUEST);
+            } catch (Exception e) {
+                return new ResponseEntity<>(new PaymentMethodResponse(null, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+            }
         }
+        return new ResponseEntity<>(new PaymentMethodResponse(null, "Too many requests!"), HttpStatus.TOO_MANY_REQUESTS);
     }
 
     @GetMapping("/get-payees")
     public ResponseEntity<PayeeResponse> getPayeesForUser(@RequestParam String userId) {
+        log.info("Get Payees request received for userId : " + userId);
         try {
             validateUser(userId);
             List<PaymentUser> payees = new ArrayList<>();

@@ -8,6 +8,9 @@ spring:
   kafka:
     consumer:
       group-id: "default"
+    listener:
+      ack-mode: manual
+
   datasource:
     url : jdbc:sqlserver://localhost:49172;encrypt=true;trustServerCertificate=true;databaseName=db_payment
     username : test
@@ -21,3 +24,7 @@ spring:
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
       ddl-auto: validate
+
+logging:
+  level:
+    root: info

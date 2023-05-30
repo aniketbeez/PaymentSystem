@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(AuthController.class);
+    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     private final TokenService tokenService;
 
@@ -20,9 +20,9 @@ public class AuthController {
 
     @PostMapping("/token")
     public String token(Authentication authentication) {
-        LOG.debug("Token requested for user: '{}'", authentication.getName());
+        logger.info("Token requested for user: '{}'", authentication.getName());
         String token = tokenService.generateToken(authentication);
-        LOG.debug("Token granted: {}", token);
+        logger.info("Token granted: {}", token);
         return token;
     }
 

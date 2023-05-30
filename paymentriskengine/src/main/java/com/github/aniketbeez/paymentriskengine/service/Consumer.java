@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -34,16 +35,21 @@ public class Consumer {
     }
 
     @KafkaListener(topics = paymentTopic)
-    public void consumeMessage(String message) throws JsonProcessingException {
-        log.info("message consumed {}", message);
-        PaymentDto paymentDto = objectMapper.readValue(message, PaymentDto.class);
-        Payment payment = modelMapper.map(paymentDto, Payment.class);
-        int riskScore = pocRiskCalculator.calculateRiskScore(payment);
-        payment.setRiskScore(riskScore);
-        payment.setApproved(isValidPayment(payment));
+    public void consumeMessage(String message, Acknowledgment ack) {
+        log.info("message consumed : {}", message);
+        try {
+            PaymentDto paymentDto = objectMapper.readValue(message, PaymentDto.class);
+            Payment payment = modelMapper.map(paymentDto, Payment.class);
+            int riskScore = pocRiskCalculator.calculateRiskScore(payment);
+            payment.setRiskScore(riskScore);
+            payment.setApproved(isValidPayment(payment));
 
-        log.info("Saving payment :" + payment.toString());
-        paymentService.savePayment(payment);
+            log.info("Persisting message to DB :" + payment);
+            paymentService.savePayment(payment);
+            ack.acknowledge();
+        } catch (Exception e) {
+            log.error("Consumer Exception :" + e.getStackTrace());
+        }
     }
 
     private boolean isValidPayment(Payment payment) {

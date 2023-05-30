@@ -1,0 +1,26 @@
+GO
+BEGIN
+Insert into dbo.PaymentUser values ('4c3e304e-ce79-4f53-bb26-4e198e6c780a','John', 'Smith', 'john@gmail.com');
+Insert into dbo.PaymentUser values ('0d15c427-3ebb-4528-80ce-18da371195cf','Peter', 'Thomas', 'peter@gmail.com');
+Insert into dbo.PaymentUser values ('afe8ad4c-26d9-4d3b-af9e-22920cd844b6','John', 'Doe', 'doe@gmail.com');
+
+
+INSERT INTO [dbo].[PaymentMethodType] VALUES ('CREDIT_CARD', 'credit card transaction');
+INSERT INTO [dbo].[PaymentMethodType] VALUES ('BANK_ACCOUNT', 'bank account transaction');
+INSERT INTO [dbo].[PaymentMethodType] VALUES ('DEBIT_CARD', 'debit card transaction');
+
+
+INSERT INTO [dbo].[PaymentMethod] VALUES ('7cefdaf6-7e63-4b76-a64a-5b80b875c30b','4c3e304e-ce79-4f53-bb26-4e198e6c780a',
+'CREDIT_CARD','john smith chase credit card','1234');
+INSERT INTO [dbo].[PaymentMethod] VALUES ('ad253893-4bb5-45c8-9af3-5bc62c232017','4c3e304e-ce79-4f53-bb26-4e198e6c780a',
+'BANK_ACCOUNT','john smith chase bank account','5678');
+INSERT INTO [dbo].[PaymentMethod] VALUES ('966093b3-773b-4ee3-bb17-6862e92326f0','0d15c427-3ebb-4528-80ce-18da371195cf',
+'CREDIT_CARD','Peter Thomas bofa credit card','6789');
+INSERT INTO [dbo].[PaymentMethod] VALUES ('78586710-fe60-11ed-be56-0242ac120002','0d15c427-3ebb-4528-80ce-18da371195cf',
+'DEBIT_CARD','Peter Thomas chase debit card','6789');
+
+INSERT into dbo.Payee values('4c3e304e-ce79-4f53-bb26-4e198e6c780a','afe8ad4c-26d9-4d3b-af9e-22920cd844b6');
+INSERT into dbo.Payee values('0d15c427-3ebb-4528-80ce-18da371195cf','afe8ad4c-26d9-4d3b-af9e-22920cd844b6');
+
+END
+

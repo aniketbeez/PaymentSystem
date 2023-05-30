@@ -17,4 +17,12 @@ public class Payment {
     private String paymentMethodId;
     private String currency;
     private BigDecimal amount;
+
+    @Override
+    public String toString() {
+        return "Payment [userId=" + userId + ", payeeId=" + payeeId + ", paymentMethodId=" + paymentMethodId + ", " +
+                "currency=" + currency + ", amount=" + amount + "]";
+    }
 }
+
+
