@@ -48,8 +48,7 @@ Consumes messages from the Kakfa queue, performs risk analysis and stores the me
 * All other APIs such register user, register payment method, etc. are out-of-scope
 * Encryption of secret information is not implemented but can be discussed during the interview
 * Risk analysis requirements are out of scope and is replaced with a dummy logic of risk calculations
-* Currently the Rest API does not serve HTTPS traffic but can be extended further
-
+* Self-signed certificate is used for HTTPS channel
 ## Running the Project:
 
 Prerequisites:
@@ -69,7 +68,7 @@ Once all the configured containers are up and running you can test the applicati
 
 Testing
 * You can use a web client like Postman
-* Get the JWT - POST request to http://localhost:8081/token with 'Basic Auth' and user credentials in SecurityConfig class.
+* Get the JWT - POST request to http://localhost:8443/token with 'Basic Auth' and user credentials in SecurityConfig class.
 * Copy the JWT received in the response
 * Perform POST/GET api resource requests using Authentication type as 'Bearer Token' and token value as the copied JWT
 * If your are creating a payment, you shall verify the payment registered in database
