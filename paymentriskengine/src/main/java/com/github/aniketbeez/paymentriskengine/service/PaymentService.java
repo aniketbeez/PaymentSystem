@@ -16,6 +16,10 @@ public class PaymentService {
         this.paymentRepository = paymentRepository;
     }
 
+    /**
+     * Persist payment to the database
+     * @param payment
+     */
     public void savePayment(Payment payment) {
         Payment savedPayment = paymentRepository.save(payment);
         log.info("payment Saved", savedPayment);

@@ -13,7 +13,6 @@ public class PaymentwebserviceApplication {
 	public static void main(String[] args) {
 
 		SpringApplication.run(PaymentwebserviceApplication.class, args);
-
 		log.info("Running Payment web service...");
 	}
 

@@ -10,7 +10,7 @@ public class PaymentriskengineApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(PaymentriskengineApplication.class, args);
-		log.info("Running...");
+		log.info("Consumer is running ...");
 	}
 
 }

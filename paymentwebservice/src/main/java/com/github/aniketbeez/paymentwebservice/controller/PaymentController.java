@@ -50,6 +50,11 @@ public class PaymentController {
                 .build();
     }
 
+    /**
+     * End point to create a payment record
+     * @param payment
+     * @return Payment response
+     */
     @PostMapping("/create-payment")
     public ResponseEntity<PaymentResponse> createPayment(@Valid @RequestBody Payment payment) {
         log.info("Payment creation request received : " + payment.toString());
@@ -84,6 +89,11 @@ public class PaymentController {
 
     }
 
+    /**
+     * End point to fetch all payment methods for an user
+     * @param userId
+     * @return Payment method response containing list of payment methods
+     */
     @GetMapping("/get-payment-methods")
     public ResponseEntity<PaymentMethodResponse> getPaymentMethodsForUser(@RequestParam String userId) {
         log.info("Get payment method request received for userId : " + userId);
@@ -102,6 +112,11 @@ public class PaymentController {
         return new ResponseEntity<>(new PaymentMethodResponse(null, "Too many requests!"), HttpStatus.TOO_MANY_REQUESTS);
     }
 
+    /**
+     * End point to fetch all the payees for an user
+     * @param userId
+     * @return Payee response object with a list of Payees
+     */
     @GetMapping("/get-payees")
     public ResponseEntity<PayeeResponse> getPayeesForUser(@RequestParam String userId) {
         log.info("Get Payees request received for userId : " + userId);
@@ -117,7 +132,11 @@ public class PaymentController {
         }
     }
 
-
+    /**
+     * Validates userId for proper UUID format and if the requester is a registered user
+     * @param userId
+     * @throws InvalidPaymentException
+     */
     private void validateUser(String userId) throws InvalidPaymentException{
         if(!paymentValidator.isValidUuid(userId)) {
             throw new InvalidPaymentException("User Id is not a valid format!");
@@ -129,6 +148,12 @@ public class PaymentController {
         }
     }
 
+    /**
+     * Validates paymentMethodId for correct UUID format and if the method is registered for requester
+     * @param paymentMethodId
+     * @param userId
+     * @throws InvalidPaymentException
+     */
     private void validatePaymentMethod(String paymentMethodId, String userId) throws InvalidPaymentException{
         //validate payment method
         if(!paymentValidator.isValidUuid(paymentMethodId)) {
@@ -142,6 +167,12 @@ public class PaymentController {
         }
     }
 
+    /**
+     * Validates if a Payee is registered for the requester
+     * @param userId
+     * @param payeeId
+     * @throws InvalidPaymentException
+     */
     private void validateUserPayee(String userId, String payeeId) throws InvalidPaymentException {
         Optional<Payee> userPayeeData = Optional.ofNullable(
                 paymentService.findPayeeForUserById(UUID.fromString(userId), UUID.fromString(payeeId)));

@@ -12,6 +12,9 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.stream.Collectors;
 
+/**
+ * Service layer abstraction for authentication token related operations
+ */
 @Service
 public class TokenService implements AuthenticatorInf {
 

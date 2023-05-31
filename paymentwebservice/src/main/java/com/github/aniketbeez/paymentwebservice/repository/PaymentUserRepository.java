@@ -10,6 +10,9 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Interface to perform CRUD operations on PaymentUser table
+ */
 public interface PaymentUserRepository extends JpaRepository<PaymentUser, Long>{
     PaymentUser findById(UUID userId);
 

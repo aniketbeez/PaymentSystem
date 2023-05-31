@@ -9,6 +9,11 @@ import java.util.Random;
 @Component
 public class PocRiskCalculator implements RiskCalculatorInf {
 
+    /**
+     * Dummy implementation for risk calculation for the POC
+     * @param payment
+     * @return riskScore
+     */
     public int calculateRiskScore(Payment payment) {
         return new Random().nextInt(100); //ignore any logic, and returns a random number that represents the risk score
     }

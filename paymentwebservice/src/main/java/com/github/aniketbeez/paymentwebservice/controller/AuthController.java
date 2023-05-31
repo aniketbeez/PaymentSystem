@@ -19,6 +19,11 @@ public class AuthController {
         this.tokenService = tokenService;
     }
 
+    /**
+     * End point to secure a jwt for a finite time
+     * @param authentication
+     * @return signed token
+     */
     @PostMapping("/token")
     public String token(Authentication authentication) {
         log.info("Token requested for user: '{}'", authentication.getName());

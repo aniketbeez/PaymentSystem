@@ -1,11 +1,8 @@
 package com.github.aniketbeez.paymentriskengine.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.aniketbeez.paymentriskengine.model.Payment;
 import com.github.aniketbeez.paymentriskengine.domain.PaymentDto;
-import com.github.aniketbeez.paymentriskengine.service.PaymentService;
-import com.github.aniketbeez.paymentriskengine.service.interfaces.ConsumerInf;
 import com.github.aniketbeez.paymentriskengine.service.interfaces.RiskCalculatorInf;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -16,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class Consumer implements ConsumerInf {
+public class Consumer {
     private static final String paymentTopic = "t.payments";
 
     private final ObjectMapper objectMapper;
@@ -35,6 +32,13 @@ public class Consumer implements ConsumerInf {
         this.paymentCounter = paymentCounter;
     }
 
+    /**
+     * Consume message from the kafka queue
+     * Perform risk analysis and approval
+     * persist payment in database
+     * @param message
+     * @param ack
+     */
     @KafkaListener(topics = paymentTopic)
     public void consumeMessage(String message, Acknowledgment ack) {
         log.info("message consumed : {}", message);
@@ -49,17 +53,27 @@ public class Consumer implements ConsumerInf {
             paymentService.savePayment(payment);
             ack.acknowledge();
         } catch (Exception e) {
-            log.error("Consumer Exception :" + e.getStackTrace());
+            log.error("Consumer Exception :" + e.getMessage());
         }
     }
 
+    /**
+     * Check validity of payment to be accepted
+     * If the atomic approval counter is less than 7, increment the counter and validate the message
+     * If the atomic counter is 7, do not increment the approval counter but increment the rejection counter and invalidate the payment
+     * Once rejection counter reaches 3, reset the counters to 0
+     * @param payment
+     * @return
+     */
     private boolean isValidPayment(Payment payment) {
         if(paymentCounter.getApprovedPaymentCounter().get() < 7) {
             paymentCounter.getApprovedPaymentCounter().incrementAndGet();
             return true;
         } else {
-            if(paymentCounter.getRejectedPaymentCounter().incrementAndGet() == 3)
+            if(paymentCounter.getRejectedPaymentCounter().incrementAndGet() == 3) {
                 paymentCounter.getApprovedPaymentCounter().set(0);
+                paymentCounter.getRejectedPaymentCounter().set(0);
+            }
             return false;
         }
     }

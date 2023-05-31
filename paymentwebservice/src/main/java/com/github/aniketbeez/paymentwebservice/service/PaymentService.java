@@ -16,6 +16,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Service layer abstracting for the producer and the persistance layer
+ */
 @Slf4j
 @Service
 public class PaymentService {
@@ -41,9 +44,11 @@ public class PaymentService {
     public String createMessage(Payment payment) throws JsonProcessingException {
         return producer.sendMessage(payment);
     }
+
     public void findPaymentMethodsForUser(UUID userId, List<PaymentMethod> paymentMethods) {
         paymentMethodRepository.findByUserId(userId).forEach(paymentMethods::add);
     }
+
     public void findPayeesForUser(UUID userId, List<PaymentUser> payees) {
         paymentUserRepository.findPayeesBy(userId).forEach(payees::add);
     }

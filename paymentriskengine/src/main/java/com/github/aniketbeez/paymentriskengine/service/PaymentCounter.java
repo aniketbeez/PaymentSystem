@@ -3,6 +3,9 @@ package com.github.aniketbeez.paymentriskengine.service;
 import org.springframework.stereotype.Component;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * Class to maintain approval and rejection counter for 70% approval for POC implementation
+ */
 @Component
 public class PaymentCounter {
 
