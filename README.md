@@ -37,11 +37,18 @@ Prerequisites:
 ### 4. Payment Risk Engine
 Consumes messages from the Kakfa queue, performs risk analysis and stores the messages in the Sql Server database. As this is a POC risk engine, it has a dummy logic for performing risk analysis and accepting only 70% of the messages.
 
+## Pub/Sub:   
+### Producer
+![alt text](/images/producer.png)
+### Consumer
+![alt text](/images/consumer.png)
 
 ## Assumptions/Considerations
+* Front end work is out of scope for this POC
 * All other APIs such register user, register payment method, etc. are out-of-scope
 * Encryption of secret information is not implemented but can be discussed during the interview
 * Risk analysis requirements are out of scope and is replaced with a dummy logic of risk calculations
+* Currently the Rest API does not serve HTTPS traffic but can be extended further
 
 ## Running the Project:
 
