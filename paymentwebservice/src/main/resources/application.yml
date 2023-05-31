@@ -1,8 +1,14 @@
 server:
-  port: 8081
+  port: 8443
   error:
     include-binding-errors: always
     include-message: always
+  ssl:
+    key-store: classpath:PaymentSystemCert.jks
+    key-store-type: pkcs12
+    key-password: password
+    key-store-password: password
+    key-alias: tutorial
 
 topic:
   name: t.payments
