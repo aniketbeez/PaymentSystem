@@ -68,7 +68,7 @@ Once all the configured containers are up and running you can test the applicati
 
 Testing
 * You can use a web client like Postman
-* Get the JWT - POST request to http://localhost:8443/token with 'Basic Auth' and user credentials in SecurityConfig class.
+* Get the JWT - POST request to https://localhost:8443/token with 'Basic Auth' and user credentials in SecurityConfig class.
 * Copy the JWT received in the response
 * Perform POST/GET api resource requests using Authentication type as 'Bearer Token' and token value as the copied JWT
 * If your are creating a payment, you shall verify the payment registered in database
